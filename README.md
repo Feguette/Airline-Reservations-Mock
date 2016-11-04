@@ -1,4 +1,12 @@
 # Airline-Reservations-Mock
+
+Fill seats randomly.
+Occupied seat as "[x]"; vacant as "[ ]" (With spacing)
+Randomizer uses percentile.
+A passenger must be able to reserve a seat, change status from vacant.
+Seat is plane's long axis. Row is plane's short axis.
+
+
 LEVEL 1
 
 (1) DISPLAYS LAYOUT OF AIRPLANE WITH GIVEN OCCUPANCY - 2
