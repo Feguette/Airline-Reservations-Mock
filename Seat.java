@@ -22,6 +22,7 @@ public class Seat
     
     public void printSeats()
     {
+       System.out.println("");
        for (int seat = 0; seat < 8; seat ++)
        {
            if (seat == 2 || seat == 6)
