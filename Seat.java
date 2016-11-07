@@ -1,7 +1,22 @@
 
 /**
  * Write a description of class Seat here.
- * 
+ *
+ * int row
+ * String section
+ * boolean vacancy, windowView, firstClass
+ * Passener passenger
+ * Seat(String aSection, int aRow)
+ * getRow()
+ * setWindowView(boolean status)
+ * getWindowViewStatus()
+ * setSeatClass(boolean status)
+ * getSeatSection()
+ * setSeatSection(String s)
+ * setVacancy(boolean status)
+ * getVacancy()
+ * assignPassenger(Passenger p)
+ *
  * @author (Jennifer Lai & Jason Liang) 
  * @version (7 Nov 2016)
  */
