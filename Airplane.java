@@ -14,7 +14,35 @@
  * @author (your name) 
  * @version (a version number or a date)
  */
+
+/**
+ * Write a description of class Airplane here.
+ * 
+ * @author (Jennifer Lai & Jason Liang) 
+ * @version (-- Nov 2016)
+ */
+import java.util.Scanner;
 public class Airplane
 {
-    
+   public static void main(String[] args)
+   {
+       
+       boolean opCont = true;
+       Seat airborne = new Seat();
+       airborne.printSeats();
+       
+       while (true)
+       {
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           airborne.
+       }
+   }
 }
