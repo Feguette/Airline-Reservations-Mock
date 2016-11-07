@@ -2,6 +2,12 @@
 /**
  * Passenger of Airplane.
  * 
+ * String firstName, lastName
+ * Passenger (String firstName, String lastName)
+ * getFullName()
+ * getFirstName()
+ * getLastName()
+ * 
  * @author (your name) 
  * @version (a version number or a date)
  */
