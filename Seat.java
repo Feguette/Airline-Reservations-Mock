@@ -2,8 +2,8 @@
 /**
  * Write a description of class Seat here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author (Jennifer Lai & Jason Liang) 
+ * @version (7 Nov 2016)
  */
 public class Seat
 {
@@ -24,13 +24,13 @@ public class Seat
     {
        for (int seat = 0; seat < 8; seat ++)
        {
-           if (seat == 2 || seat == 5)
+           if (seat == 2 || seat == 6)
            System.out.println("");
            System.out.print(seatLetter[seat] + "  ");
            for (int row = 0; row < 12; row ++)
            {
-               if (row == 4 || row == 8)
-               System.out.print(" ");
+               if (row == 4)
+               System.out.print("  ");
                System.out.print("[");
                if (occupied[seat][row] == false)
                {
@@ -46,5 +46,6 @@ public class Seat
            }
            System.out.println("");
        }
+       System.out.print("    1  2  3  4    5  6  7  8  9  10 11 12");
     }
 }
