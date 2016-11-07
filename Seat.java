@@ -7,27 +7,44 @@
  */
 public class Seat
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
-    /**
-     * Constructor for objects of class Seat
-     */
+    private String[] seatLetter = {"A", "B", "C", "D", "E", "F", "G", "H"};
+    private boolean[][] occupied = new boolean[8][12];
     public Seat()
     {
-        // initialise instance variables
-        x = 0;
+        for (int i = 0; i < occupied.length; i ++)
+        {
+            for (int j = 0; j < occupied[1].length; j ++)
+            {
+                occupied[i][j] = false;
+            }
+        }
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
+    
+    public void printSeats()
     {
-        // put your code here
-        return x + y;
+       for (int seat = 0; seat < 8; seat ++)
+       {
+           if (seat == 2 || seat == 5)
+           System.out.println("");
+           System.out.print(seatLetter[seat] + "  ");
+           for (int row = 0; row < 12; row ++)
+           {
+               if (row == 4 || row == 8)
+               System.out.print(" ");
+               System.out.print("[");
+               if (occupied[seat][row] == false)
+               {
+                   System.out.print(" ");
+               }
+               else {
+               if (occupied[seat][row] == false)
+               {
+                   System.out.print("x");
+               }
+               }
+               System.out.print("]");
+           }
+           System.out.println("");
+       }
     }
 }
