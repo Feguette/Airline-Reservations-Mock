@@ -26,23 +26,37 @@ public class Airplane
 {
    public static void main(String[] args)
    {
-       
+       Scanner in = new Scanner(System.in);
+       Scanner val = new Scanner(System.in);
        boolean opCont = true;
        Seat airborne = new Seat();
        airborne.printSeats();
+       int option;
        
-       while (true)
+       while (opCont)
        {
+           System.out.println("1. Print occupancy");
+           System.out.println("2. Set occupancy");
+           System.out.println("0. Quit");
+           option = in.nextInt();
            
            
+           if (option == 0)
+           break;
            
+           if (option == 1)
+           airborne.printSeats();
            
+           if (option == 2)
+           {
+               System.out.println("Input seat(Letter A - H), then row (No. 1 - 12): ");
+               String comSeat = val.nextLine();
+               int varsRow = val.nextInt();
+               airborne.setOccupied(comSeat, varsRow);
+           }
            
-           
-           
-           
-           
-           airborne.
+           System.out.println("");
+       }
        }
    }
 }
