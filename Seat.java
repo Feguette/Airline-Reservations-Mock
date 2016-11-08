@@ -1,11 +1,12 @@
 
+
 /**
  * Write a description of class Seat here.
  *
  * int row
  * String section
  * boolean vacancy, windowView, firstClass
- * Passener passenger
+ * Passenger passenger
  * Seat(String aSection, int aRow)
  * getRow()
  * setWindowView(boolean status)
@@ -16,6 +17,7 @@
  * setVacancy(boolean status)
  * getVacancy()
  * assignPassenger(Passenger p)
+ * getPassenger()
  *
  * @author (Jennifer Lai & Jason Liang) 
  * @version (7 Nov 2016)
@@ -24,6 +26,9 @@ public class Seat
 {
     private String[] seatLetter = {"A", "B", "C", "D", "E", "F", "G", "H"};
     private boolean[][] occupied = new boolean[8][12];
+    private boolean windowView, firstClass;
+    private Passenger passenger;
+    
     public Seat()
     {
         for (int i = 0; i < occupied.length; i ++)
@@ -33,6 +38,39 @@ public class Seat
                 occupied[i][j] = false;
             }
         }
+        windowView = false;
+        firstClass = false;
+    }
+    
+    public int getRow() {
+        return 
+    }
+    
+    public void setWindowView(boolean status) {
+    }
+    
+    public boolean getWindowViewStatus() {
+    }
+    
+    public void setSeatClass(boolean status) {
+    }
+    
+    public boolean getSeatClass() {
+    }
+    
+    public void setSeatSection(String s) {
+    }
+    
+    public void setVacancy(boolean status) {
+    }
+    
+    public boolean getVacancy() {
+    }
+    
+    public void assignPassenger(Passenger p) {
+    }
+    
+    public Passenger getPassenger() {
     }
     
     public void printSeats()
@@ -41,7 +79,7 @@ public class Seat
        for (int seat = 0; seat < 8; seat ++)
        {
            if (seat == 2 || seat == 6)
-           System.out.println("");
+            System.out.println("");
            System.out.print(seatLetter[seat] + "  ");
            for (int row = 0; row < 12; row ++)
            {
