@@ -1,5 +1,4 @@
 
-
 /**
  * Write a description of class Seat here.
  *
@@ -26,7 +25,7 @@ public class Seat
 {
     private String[] seatLetter = {"A", "B", "C", "D", "E", "F", "G", "H"};
     private boolean[][] occupied = new boolean[8][12];
-    private boolean windowView, firstClass;
+    private boolean windowView, firstClass, vacancy;
     private Passenger passenger;
     
     public Seat()
@@ -42,36 +41,45 @@ public class Seat
         firstClass = false;
     }
     
+    /*
     public int getRow() {
-        return 
     }
-    
+    */
+   
     public void setWindowView(boolean status) {
+        windowView = status;
     }
     
     public boolean getWindowViewStatus() {
+        return windowView;
     }
     
     public void setSeatClass(boolean status) {
+        firstClass = status;
     }
     
     public boolean getSeatClass() {
+        return firstClass;
     }
     
     public void setSeatSection(String s) {
     }
     
     public void setVacancy(boolean status) {
+        vacancy = status;
     }
     
     public boolean getVacancy() {
+        return vacancy;
     }
     
+    /*
     public void assignPassenger(Passenger p) {
     }
     
     public Passenger getPassenger() {
     }
+    */
     
     public void printSeats()
     {
