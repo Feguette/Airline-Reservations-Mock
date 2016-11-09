@@ -87,7 +87,7 @@ public class Seat
        for (int seat = 0; seat < 8; seat ++)
        {
            if (seat == 2 || seat == 6)
-            System.out.println("");
+           System.out.println("");
            System.out.print(seatLetter[seat] + "  ");
            for (int row = 0; row < 12; row ++)
            {
@@ -99,7 +99,7 @@ public class Seat
                    System.out.print(" ");
                }
                else {
-               if (occupied[seat][row] == false)
+               if (occupied[seat][row] == true)
                {
                    System.out.print("x");
                }
@@ -108,6 +108,6 @@ public class Seat
            }
            System.out.println("");
        }
-       System.out.print("    1  2  3  4    5  6  7  8  9  10 11 12");
+       System.out.println("    1  2  3  4    5  6  7  8  9  10 11 12");
     }
 }
