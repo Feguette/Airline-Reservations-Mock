@@ -24,19 +24,12 @@
 public class Seat
 {
     private String[] seatLetter = {"A", "B", "C", "D", "E", "F", "G", "H"};
-    private boolean[][] occupied = new boolean[8][12];
+    //private boolean[][] occupied = new boolean[8][12];
     private boolean windowView, firstClass, vacancy;
-    private Passenger passenger;
+    private Passenger[][] passengers = new Passenger[8][12];
     
     public Seat()
     {
-        for (int i = 0; i < occupied.length; i ++)
-        {
-            for (int j = 0; j < occupied[1].length; j ++)
-            {
-                occupied[i][j] = false;
-            }
-        }
         windowView = false;
         firstClass = false;
     }
@@ -45,7 +38,26 @@ public class Seat
     public int getRow() {
     }
     */
-   
+    public void assignPassenger(Passenger p, int seat, int row)
+    {
+        passengers[seat][row] = p;
+    }
+    
+    public int seatToInt(String str)
+   {
+       for (int i = 0; i < seatLetter.length; i ++)
+       {
+           if (str.equals(seatLetter[i]))
+           {
+               return i;
+            }
+       }
+       return -1;
+   }
+    
+    /**
+     * 
+     */
     public void setWindowView(boolean status) {
         windowView = status;
     }
@@ -62,7 +74,11 @@ public class Seat
         return firstClass;
     }
     
+    /**
+     * 
+     */
     public void setSeatSection(String s) {
+        
     }
     
     public void setVacancy(boolean status) {
@@ -94,12 +110,12 @@ public class Seat
                if (row == 4)
                System.out.print("  ");
                System.out.print("[");
-               if (occupied[seat][row] == false)
+               if (passengers[seat][row] == null)
                {
                    System.out.print(" ");
                }
                else {
-               if (occupied[seat][row] == true)
+               if (passengers[seat][row] != null)
                {
                    System.out.print("x");
                }
