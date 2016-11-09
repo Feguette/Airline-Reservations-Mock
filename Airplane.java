@@ -36,7 +36,7 @@ public class Airplane
        while (opCont)
        {
            System.out.println("1. Print occupancy");
-           System.out.println("2. Set occupancy");
+           System.out.println("2. Create and assign new passenger");
            System.out.println("0. Quit");
            System.out.print("Input option: ");
            option = in.nextInt();
@@ -50,13 +50,22 @@ public class Airplane
            
            if (option == 2)
            {
+               System.out.println("Input first name, enter, then last name");
+               String firstName = val.nextLine();
+               String lastName = val.nextLine();
                System.out.println("Input seat(Letter A - H), then row (No. 1 - 12): ");
                String str = val.nextLine();
-               airborne.setOccupied(str.substring(0, 1), Integer.valueOf(str.substring(1)) - 1);
+               Passenger sheep = new Passenger(firstName, lastName);
+               int seat = airborne.seatToInt(str.substring(0,1));
+               int row = Integer.valueOf(str.substring(1)) - 1;
+               airborne.assignPassenger(sheep, seat, row);
+               //airborne.setOccupied(str.substring(0, 1), Integer.valueOf(str.substring(1)) - 1);
            }
            
            System.out.println("");
        }
-       }
    }
+   
+   
+}
 
