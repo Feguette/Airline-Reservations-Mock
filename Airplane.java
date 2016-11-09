@@ -38,6 +38,7 @@ public class Airplane
            System.out.println("1. Print occupancy");
            System.out.println("2. Set occupancy");
            System.out.println("0. Quit");
+           System.out.print("Input option: ");
            option = in.nextInt();
            
            
@@ -50,13 +51,12 @@ public class Airplane
            if (option == 2)
            {
                System.out.println("Input seat(Letter A - H), then row (No. 1 - 12): ");
-               String comSeat = val.nextLine();
-               int varsRow = val.nextInt();
-               airborne.setOccupied(comSeat, varsRow);
+               String str = val.nextLine();
+               airborne.setOccupied(str.substring(0, 1), Integer.valueOf(str.substring(1)) - 1);
            }
            
            System.out.println("");
        }
        }
    }
-}
+
