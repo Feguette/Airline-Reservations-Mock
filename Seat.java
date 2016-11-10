@@ -1,4 +1,5 @@
 
+
 /**
  * Write a description of class Seat here.
  *
@@ -23,41 +24,32 @@
  */
 public class Seat
 {
-    private String[] seatLetter = {"A", "B", "C", "D", "E", "F", "G", "H"};
+    //private String[] seatLetter = {"A", "B", "C", "D", "E", "F", "G", "H"};
     //private boolean[][] occupied = new boolean[8][12];
-    private boolean windowView, firstClass, vacancy;
-    private Passenger[][] passengers = new Passenger[8][12];
+    private int row;
+    private String section;
+    private boolean windowView, firstClass;
+    private boolean vacancy;
+    private Passenger passenger;
     
-    public Seat()
+    public Seat(String aSection, int aRow)
     {
+        String section = aSection;
+        int row = aRow;
+        Passenger passenger = new Passenger("John", "Doe");
         windowView = false;
         firstClass = false;
+        vacancy = true;
+    }
+
+    public void setRow(int aRow) {
+        row = aRow;
     }
     
-    /*
     public int getRow() {
-    }
-    */
-    public void assignPassenger(Passenger p, int seat, int row)
-    {
-        passengers[seat][row] = p;
+        return row;
     }
     
-    public int seatToInt(String str)
-   {
-       for (int i = 0; i < seatLetter.length; i ++)
-       {
-           if (str.equals(seatLetter[i]))
-           {
-               return i;
-            }
-       }
-       return -1;
-   }
-    
-    /**
-     * 
-     */
     public void setWindowView(boolean status) {
         windowView = status;
     }
@@ -74,11 +66,12 @@ public class Seat
         return firstClass;
     }
     
-    /**
-     * 
-     */
     public void setSeatSection(String s) {
-        
+        section = s;
+    }
+    
+    public String getSeatSection() {
+        return section;
     }
     
     public void setVacancy(boolean status) {
@@ -89,41 +82,13 @@ public class Seat
         return vacancy;
     }
     
-    /*
+    
     public void assignPassenger(Passenger p) {
+        passenger = p;
     }
     
     public Passenger getPassenger() {
+        return passenger;
     }
-    */
     
-    public void printSeats()
-    {
-       System.out.println("");
-       for (int seat = 0; seat < 8; seat ++)
-       {
-           if (seat == 2 || seat == 6)
-           System.out.println("");
-           System.out.print(seatLetter[seat] + "  ");
-           for (int row = 0; row < 12; row ++)
-           {
-               if (row == 4)
-               System.out.print("  ");
-               System.out.print("[");
-               if (passengers[seat][row] == null)
-               {
-                   System.out.print(" ");
-               }
-               else {
-               if (passengers[seat][row] != null)
-               {
-                   System.out.print("x");
-               }
-               }
-               System.out.print("]");
-           }
-           System.out.println("");
-       }
-       System.out.println("    1  2  3  4    5  6  7  8  9  10 11 12");
-    }
 }
