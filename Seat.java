@@ -34,8 +34,8 @@ public class Seat
     
     public Seat(String aSection, int aRow)
     {
-        String section = aSection;
-        int row = aRow;
+        section = aSection;
+        row = aRow;
         Passenger passenger = new Passenger("John", "Doe");
         windowView = false;
         firstClass = false;
@@ -80,8 +80,7 @@ public class Seat
     
     public boolean getVacancy() {
         return vacancy;
-    }
-    
+    }    
     
     public void assignPassenger(Passenger p) {
         passenger = p;
