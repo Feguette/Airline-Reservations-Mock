@@ -55,7 +55,6 @@ public class Airplane
                 temp.setSeatClass(firstClass);
                 temp.setVacancy(true);
                 seats[j][i] = temp;
-                System.out.println("section " +seats[j][i].getSeatSection()+ " row " + seats[j][i].getRow());
             }
         }
     }
@@ -127,6 +126,10 @@ public class Airplane
         }
     }
    
+    public void reserveRandom(int pref, Passenger p) {
+        
+    }
+    
     public int countPassengers() {
         int count = 0;
         for (int i=1; i<SECTION; i++) {
@@ -153,8 +156,8 @@ public class Airplane
        {
            System.out.println("Number of passengers are: " + airborne.countPassengers());
            System.out.println("1. Print occupancy.");
-           System.out.println("2. Reserve seat manually.");
-           System.out.println("3. Reserve seat automatically.");
+           System.out.println("2. Reserve seat(s) manually.");
+           System.out.println("3. Reserve seat(s) automatically.");
            System.out.println("6. Print passenger information.");
            System.out.println("0. Quit");
            System.out.print("Input option: ");
@@ -169,21 +172,36 @@ public class Airplane
            
            if (option == 2)
            {
-               System.out.print("Input seat(Letter A - H):  ");
-               String seatLetter = st.nextLine();
-               System.out.print("Input row (No. 1 - 12): ");
-               int seatRow = in.nextInt();
-               System.out.print("What is the passenger's first name: ");
-               String pFirst = st.nextLine();
-               System.out.print("What is the passenger's last name: ");
-               String pLast = st.nextLine();
-               Passenger temp = new Passenger(pFirst, pLast);
-               airborne.reserveSeat(seatLetter, seatRow, temp);
+               System.out.print("How many passengers will be flying?");
+               int numberPassengers = in.nextInt();
+               for (int i=0; i<numberPassengers; i++) {
+                   System.out.print("Input seat(Letter A - H):  ");
+                   String seatLetter = st.nextLine();
+                   System.out.print("Input row (No. 1 - 12): ");
+                   int seatRow = in.nextInt();
+                   System.out.print("What is the passenger's first name: ");
+                   String pFirst = st.nextLine();
+                   System.out.print("What is the passenger's last name: ");
+                   String pLast = st.nextLine();
+                   Passenger temp = new Passenger(pFirst, pLast);
+                   airborne.reserveSeat(seatLetter, seatRow, temp);
+                }
+           }
+           
+           if (option == 3) {
+               System.out.print("How many passengers will be flying?");
+               int numberPassengers = in.nextInt();
+               System.out.println("(0) No Preference");
+               System.out.println("(1) Together aisle seat");
+               System.out.println("(2) All window seat");
+               System.out.println("(3) All first class");
+               System.out.print("Input one of 3 options shown above(0/1/2/3): ");
+               int preference = in.nextInt();
            }
            
            if (option == 6) {
                airborne.displayPassengers();
-            }
+           }
            
            System.out.println("");
        }
