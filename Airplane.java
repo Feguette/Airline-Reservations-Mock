@@ -1,3 +1,17 @@
+/**
+ * Airplane containing seats.
+ *
+ * int ROW, SECTION
+ * Seat[][]seats
+ * Airplane()
+ * initializeSeats()
+ * printSeats()
+ * displayMenu()
+ * reserveSeat(String section, int row)
+ * randomFill(int numberOfSeats) //Name as John Doe1, John Doe2, John Doe3...
+ *
+ * @author (your name) 
+ * @version (a version number or a date)
  */
 
 /**
@@ -7,75 +21,81 @@
  * @version (-- Nov 2016)
  */
 import java.util.Scanner;
+import java.util.Random;
 public class Airplane
 {
-    private final int ROW = 12;
-    private final int SECTION = 8;
-    private String[] seatLetter = {"A", "B", "C", "D", "E", "F", "G", "H"};
+    private final int ROW = 13; //Rows 1-12
+    private final int SECTION = 9; //Sections A-H
+    private String[] seatLetter = {"Z", "A", "B", "C", "D", "E", "F", "G", "H"};
     private Seat[][] seats;
+    private Random rand;
     
     public Airplane() {
         seats = new Seat[SECTION][ROW];
+        rand = new Random();
         initializeSeats();
     }
     
     public void initializeSeats() {
-        for (int i=0; i<ROW; i++) {
+        for (int i=1; i<ROW; i++) {
             boolean firstClass = true;
             if (i>4) {
                 firstClass = false;
             }
             
-            for (int j=0; j<SECTION; j++) {
+            for (int j=1; j<SECTION; j++) {
                 String section = "Z";
-                boolean windowView = true;
-                
-                for (int k=0; k<seatLetter.length; k++) {
-                    section = seatLetter[k];
-                    if (section.equalsIgnoreCase("A") || section.equalsIgnoreCase("H")) {
-                        windowView = true;
-                    }
+                boolean windowView = false;
+                section = seatLetter[j];
+                if (section.equalsIgnoreCase("A") || section.equalsIgnoreCase("H")) {
+                    windowView = true;
                 }
                 Seat temp = new Seat(section,i);
                 temp.setWindowView(windowView);
                 temp.setSeatClass(firstClass);
                 temp.setVacancy(true);
                 seats[j][i] = temp;
+                System.out.println("section " +seats[j][i].getSeatSection()+ " row " + seats[j][i].getRow());
             }
         }
     }
     
     public void printSeats() {
-        for (int i=0; i<SECTION; i++) {
+        for (int i=1; i<SECTION; i++) {
             System.out.print(seatLetter[i] + " "); 
-            for (int j=0; j<ROW; j++) {
-                if (j==3) {
-                    if (seats[i][j].getVacancy()==false)
-                        System.out.print("[X]   ");
-                    else
-                        System.out.print("[ ]   ");
-                }    
-                else {
-                    if (seats[i][j].getVacancy()==false)
-                        System.out.print("[X]");
-                    else
-                        System.out.print("[ ]");    
+            for (int j=1; j<ROW; j++) {
+                if (seats[i][j].getVacancy()==false)
+                    System.out.print("[X]");
+                else
+                    System.out.print("[ ]");
+                if(j==3) {
+                    System.out.print("   ");
                 }
             }
-            System.out.println("");
+            if (i==1 || i==5)
+                System.out.println();
+            System.out.println();
         }
         System.out.println("   1  2  3  4     5  6  7  8  9  10 11 12");
     }
     
-    public void displayMenu() {
-    
+    public void displayPassengers() {
+        for (int i=1;i<SECTION; i++) {
+            for (int j=1;j<ROW; j++) {
+                if (seats[i][j].getVacancy()==false) {
+                    System.out.print("Section: " + seats[i][j].getSeatSection());
+                    System.out.print(" Row: " + seats[i][j].getRow());
+                    System.out.println(" Passenger: " + seats[i][j].getPassenger().getFullName());
+                }
+            }
+        }
     }
     
     public int seatToInt(String str)
     {
-       for (int i = 0; i < seatLetter.length; i ++)
+       for (int i = 1; i < seatLetter.length; i ++)
        {
-           if (str.equals(seatLetter[i]))
+           if (str.equalsIgnoreCase(seatLetter[i]))
            {
                return i;
             }
@@ -85,9 +105,37 @@ public class Airplane
     
     public void  reserveSeat(String section, int row, Passenger p) {
         int sectionNew = seatToInt(section);
-        int rowNew = row-1;
-        seats[sectionNew][rowNew].assignPassenger(p);
-        seats[sectionNew][rowNew].setVacancy(false);
+        if (seats[sectionNew][row].getVacancy()==true) {
+            seats[sectionNew][row].assignPassenger(p);
+            seats[sectionNew][row].setVacancy(false);
+        }
+        else
+            System.out.println("Occupied. Please choose another seat.");
+    }
+    
+    public void randomFill(int n) {
+        int count=0;
+        while (count<n) {
+           int randSection = rand.nextInt(SECTION);
+           int randRow = rand.nextInt(ROW);
+           if (randSection !=0 && randRow !=0 && seats[randSection][randRow].getVacancy()==true) {
+               seats[randSection][randRow].setVacancy(false);
+               Passenger temp = new Passenger("John", "Doe" + count + "");
+               seats[randSection][randRow].assignPassenger(temp);
+               count = count+1;
+            }
+        }
+    }
+   
+    public int countPassengers() {
+        int count = 0;
+        for (int i=1; i<SECTION; i++) {
+            for (int j=1; j<ROW; j++) {
+                if (seats[i][j].getVacancy()==false)
+                    count = count + 1;
+            }
+        }
+        return count;
     }
     
     public static void main(String[] args) {
@@ -97,13 +145,17 @@ public class Airplane
        //Scanner val = new Scanner(System.in);
        boolean opCont = true;
        Airplane airborne = new Airplane();
+       airborne.randomFill(20);
        airborne.printSeats();
        int option;
        
        while (opCont)
        {
-           System.out.println("1. Print occupancy");
-           System.out.println("2. Set occupancy");
+           System.out.println("Number of passengers are: " + airborne.countPassengers());
+           System.out.println("1. Print occupancy.");
+           System.out.println("2. Reserve seat manually.");
+           System.out.println("3. Reserve seat automatically.");
+           System.out.println("6. Print passenger information.");
            System.out.println("0. Quit");
            System.out.print("Input option: ");
            option = in.nextInt();
@@ -129,11 +181,11 @@ public class Airplane
                airborne.reserveSeat(seatLetter, seatRow, temp);
            }
            
-           System.out.println("");
+           if (option == 6) {
+               airborne.displayPassengers();
+            }
            
+           System.out.println("");
        }
-       
-      Airplane fly = new Airplane();
-      fly.printSeats();
-   }    
+    }    
 }
