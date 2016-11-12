@@ -21,7 +21,7 @@ public class Passenger
     }
     
     public String getFullName() {
-        return firstName + lastName;
+        return firstName + " " + lastName;
     }
     
     public String getFirstName() {
