@@ -134,10 +134,13 @@ public class Airplane
         if (foundSection==-1 && foundRow==-1) {
             System.out.println("No such passenger found.");
         }
-        Passenger empty = new Passenger("", "");
-        seats[foundSection][foundRow].assignPassenger(empty);
-        seats[foundSection][foundRow].setVacancy(true);
+        else {
+            Passenger empty = new Passenger("", "");
+            seats[foundSection][foundRow].assignPassenger(empty);
+            seats[foundSection][foundRow].setVacancy(true);
+        }
     }
+    
     
     public void cancelBySeat(String section, int row) {
         int foundSection = seatToInt(section);
