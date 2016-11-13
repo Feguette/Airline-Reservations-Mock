@@ -27,7 +27,7 @@ public class Airplane
 {
     private final int ROW = 13; //Rows 1-12, exclude 0
     private final int SECTION = 9; //Sections A-H, exclude Z
-    private String[] seatLetter = {"Z", "A", "B", "C", "D", "E", "F", "G", "H"};
+    private static String[] seatLetter = {"Z", "A", "B", "C", "D", "E", "F", "G", "H"};
     private Seat[][] seats;
     private Random rand;
     private int type; //Number of times John Doe's have been made
@@ -216,8 +216,6 @@ public class Airplane
         return count;
     }
     
-    
-    
     /**
      * Returns an arraylist of arrays containing the sections and rows that may be used to group passengers. If no spots found, returns null.
      * (Postcondition: An arraylist within boundaries)
@@ -234,42 +232,47 @@ public class Airplane
             for(int j = 0; j < 14; j ++)
             {
                 vacancy[i][j] = true;
+                if (!(i == 0 || i == 9 || j == 0 || j == 13))
                 if (seats[i][j].getVacancy() == false)
                     vacancy[i][j] = false;
                 
             }
         }
         
-        for(int i = 0; i < 14; i ++)
-        {
-            vacancy[0][i] = false;
-            vacancy[13][i] = false;
-        }
-        
         for(int i = 0; i < 10; i ++)
         {
             vacancy[i][0] = false;
-            vacancy[i][9] = false;
+            vacancy[i][13] = false;
+        }
+        
+        for(int i = 0; i < 14; i ++)
+        {
+            vacancy[0][i] = false;
+            vacancy[9][i] = false;
         }
         
 
         int[] checkV = {-1,1,0,0};
         int[] checkH = {0,0,-1,1};
-        finish: for (int i = 1; i <= 8; i ++)
+        finish: for (int j = 1; j <= 12; j ++)
         {
-            for (int j = 1; j <= 12; j ++)
+            for (int i = 1; i <= 8; i ++)
             {
+                //System.out.print("Thisruns");
                 if (vacancy[i][j] == true)
                 {
+                    //System.out.print("Thisruns0");
                     int counter = 0;
                     position.add(new int[] {i,j});
                     vacancy[i][j] = false;
                     while (position.size() > counter)
                     {
+                        //System.out.print("Thisruns2");
                         if (valSeats <= position.size())
                         {
                             for (int k = 0; k < position.size() - valSeats; k++)
                             position.remove(valSeats);
+                            //System.out.print("Thisruns3");
                             return position;
                         }
                         int[] current = position.get(counter);
@@ -277,6 +280,7 @@ public class Airplane
                         {
                             if (vacancy[current[0] + checkV[k]][current[1] + checkH[k]] == true)
                             {
+                                //System.out.print("Thisruns1");
                                 position.add(new int[]{current[0] + checkV[k], current[1] + checkH[k]});
                                 vacancy[current[0] + checkV[k]][current[1] + checkH[k]] = false;
                             }
@@ -326,39 +330,72 @@ public class Airplane
            
            if (option == 2)
            {
+               System.out.println("1. Reserve individually");
+               System.out.println("2. Reserve in group");
+               option = in.nextInt();
+               
                System.out.print("How many passengers will be flying: ");
                int numberPassengers = in.nextInt();
-               for (int i=0; i < numberPassengers; i++) {
-                   //System.out.print("Input seat(Letter A - H):  ");
-                   //String seatLetter = st.nextLine();
-                   //System.out.print("Input row (No. 1 - 12): ");
-                   //int seatRow = in.nextInt();
-                   System.out.print("Input seat(Letter A - H) and row (No. 1 - 12): ");
-                   String partSeat = st.nextLine();
-                   String seatLetter = partSeat.substring(0,1);
-                   int seatRow = Integer.valueOf(partSeat.substring(1));
-                   //System.out.print("What is the passenger's first name: ");
-                   //String pFirst = st.nextLine();
-                   //System.out.print("What is the passenger's last name: ");
-                   //String pLast = st.nextLine();
-                   String partName;
-                   String pFirst;
-                   String pLast;
-                   while (true)
-                   {
-                       System.out.print("Input passenger's first and last name (add the last space in between first and last name): ");
-                       partName = st.nextLine();
-                       if (!(partName.length() - partName.replace(" ","").length() > 0))
-                            System.out.println("Enter a last name, or add a space between first name and last name."); 
-                       else 
-                            break;
-                   }
-                   pFirst = partName.substring(0, partName.lastIndexOf(" "));
-                   pLast =  partName.substring(partName.lastIndexOf(" ") + 1);
-                   Passenger temp = new Passenger(pFirst, pLast);
-                   airborne.reserveSeat(seatLetter, seatRow, temp);
-
+               
+               if (option == 1)
+               {
+                    for (int i=0; i < numberPassengers; i++) {
+                           System.out.print("Input seat(Letter A - H) and row (No. 1 - 12): ");
+                           String partSeat = st.nextLine();
+                           String seatLetter = partSeat.substring(0,1);
+                           int seatRow = Integer.valueOf(partSeat.substring(1));
+                           String partName;
+                            String pFirst;
+                            String pLast;
+                            while (true)
+                            {
+                                System.out.print("Input passenger's first and last name (add the last space in between first and last name): ");
+                                partName = st.nextLine();
+                                if (!(partName.length() - partName.replace(" ","").length() > 0)) //Checks if there is at least 1 space in the input
+                                    System.out.println("Enter a last name, or add a space between first name and last name."); 
+                                else 
+                                    break;
+                            }
+                            pFirst = partName.substring(0, partName.lastIndexOf(" "));
+                            pLast =  partName.substring(partName.lastIndexOf(" ") + 1);
+                            Passenger temp = new Passenger(pFirst, pLast);
+                           airborne.reserveSeat(seatLetter, seatRow, temp);
+        
+                    }
                 }
+                
+               if (option == 2)
+               {
+                       ArrayList<int[]> position = airborne.groupFinder(numberPassengers);
+                       if (position != null)
+                       {
+                            for (int i = 0; i < numberPassengers; i++)
+                            {
+                                int[] spot = position.get(i);
+                                String partName;
+                                String pFirst;
+                                String pLast;
+                                while (true)
+                                {
+                                    System.out.print("Input passenger's first and last name (add the last space in between first and last name): ");
+                                    partName = st.nextLine();
+                                    if (!(partName.length() - partName.replace(" ","").length() > 0)) //Checks if there is at least 1 space in the input
+                                        System.out.println("Enter a last name, or add a space between first name and last name."); 
+                                    else 
+                                        break;
+                                }
+                                pFirst = partName.substring(0, partName.lastIndexOf(" "));
+                                pLast =  partName.substring(partName.lastIndexOf(" ") + 1);
+                                Passenger temp = new Passenger(pFirst, pLast);
+                                airborne.reserveSeat(seatLetter[spot[0]], spot[1], temp);
+                            }
+                       }
+                       else
+                       {
+                            System.out.println("Could not find appropriate number of seats.");
+                       }
+               }
+               option = -1;
             }
            
            if (option == 3) {
