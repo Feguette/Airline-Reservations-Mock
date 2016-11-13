@@ -226,6 +226,8 @@ public class Airplane
     public ArrayList<int[]> groupFinder(int valSeats)   {
         boolean[][] vacancy = new boolean[10][14]; //boolean of an 8 by 12 with 1 wide borders.
         ArrayList<int[]> position = new ArrayList<int[]>(); //storage for positions; also acts as a queue for counter to check
+        Scanner st = new Scanner(System.in);
+        int option1, option2;
         
         for(int i = 0; i < 10; i ++)
         {
@@ -251,10 +253,75 @@ public class Airplane
             vacancy[9][i] = false;
         }
         
+        
+        System.out.println("1. First Class ");
+        System.out.println("2. Economy Class ");
+        System.out.println("other. No preference ");
+        System.out.println("Input a preference: ");
+        option1 = st.nextInt();
+        
+        System.out.println("1. Window ");
+        System.out.println("2. Aisle ");
+        System.out.println("other. No preference ");
+        System.out.println("Input a preference: ");
+        option2 = st.nextInt();
+        
+        if (option1 == 1)
+        {
+            for(int i = 1; i <= 8; i ++)
+            {
+                for(int j = 1; j <= 12; j ++)
+                {
+                    if (seats[i][j].getSeatClass() == false)
+                        vacancy[i][j] = false;
+                    
+                }
+            }
+        }
+        
+        if (option1 == 2)
+        {
+            for(int i = 1; i <= 8; i ++)
+            {
+                for(int j = 1; j <= 12; j ++)
+                {
+                    if (seats[i][j].getSeatClass() == true)
+                        vacancy[i][j] = false;
+                    
+                }
+            }
+        }
+        
+        if (option2 == 1)
+        {
+            for(int i = 1; i <= 8; i ++)
+            {
+                for(int j = 1; j <= 12; j ++)
+                {
+                    if (seats[i][j].getWindowViewStatus() == false)
+                        vacancy[i][j] = false;
+                    
+                }
+            }
+        }
+        
+        if (option2 == 2)
+        {
+            for(int i = 1; i <= 8; i ++)
+            {
+                for(int j = 1; j <= 12; j ++)
+                {
+                    if (seats[i][j].getWindowViewStatus() == true)
+                        vacancy[i][j] = false;
+                    
+                }
+            }
+        }
+        
 
         int[] checkV = {-1,1,0,0};
         int[] checkH = {0,0,-1,1};
-        finish: for (int j = 1; j <= 12; j ++)
+        for (int j = 1; j <= 12; j ++)
         {
             for (int i = 1; i <= 8; i ++)
             {
@@ -332,6 +399,7 @@ public class Airplane
            {
                System.out.println("1. Reserve individually");
                System.out.println("2. Reserve in group");
+               System.out.print("Input one of the options above: ");
                option = in.nextInt();
                
                System.out.print("How many passengers will be flying: ");
@@ -345,20 +413,20 @@ public class Airplane
                            String seatLetter = partSeat.substring(0,1);
                            int seatRow = Integer.valueOf(partSeat.substring(1));
                            String partName;
-                            String pFirst;
-                            String pLast;
-                            while (true)
-                            {
+                           String pFirst;
+                           String pLast;
+                           while (true)
+                           {
                                 System.out.print("Input passenger's first and last name (add the last space in between first and last name): ");
                                 partName = st.nextLine();
                                 if (!(partName.length() - partName.replace(" ","").length() > 0)) //Checks if there is at least 1 space in the input
                                     System.out.println("Enter a last name, or add a space between first name and last name."); 
                                 else 
                                     break;
-                            }
-                            pFirst = partName.substring(0, partName.lastIndexOf(" "));
-                            pLast =  partName.substring(partName.lastIndexOf(" ") + 1);
-                            Passenger temp = new Passenger(pFirst, pLast);
+                           }
+                           pFirst = partName.substring(0, partName.lastIndexOf(" "));
+                           pLast =  partName.substring(partName.lastIndexOf(" ") + 1);
+                           Passenger temp = new Passenger(pFirst, pLast);
                            airborne.reserveSeat(seatLetter, seatRow, temp);
         
                     }
@@ -453,7 +521,7 @@ public class Airplane
                
                
            }
-           
+            
            if (option==8) {
                
                
