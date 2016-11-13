@@ -21,11 +21,12 @@
  * @version (-- Nov 2016)
  */
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.Random;
 public class Airplane
 {
-    private final int ROW = 13; //Rows 1-12
-    private final int SECTION = 9; //Sections A-H
+    private final int ROW = 13; //Rows 1-12, exclude 0
+    private final int SECTION = 9; //Sections A-H, exclude Z
     private String[] seatLetter = {"Z", "A", "B", "C", "D", "E", "F", "G", "H"};
     private Seat[][] seats;
     private Random rand;
@@ -127,6 +128,7 @@ public class Airplane
                 }
             }
         }
+        
         if (foundSection==-1 && foundRow==-1) {
             System.out.println("No such passenger found.");
         }
@@ -169,6 +171,80 @@ public class Airplane
             }
         }
         return count;
+    }
+    
+    /**
+     * Returns an arraylist of arrays containing the sections and rows that may be used to group passengers. If no spots found, returns null.
+     * (Postcondition: An arraylist within boundaries)
+     * @return Either null or a list of available adjacent seats.
+     * @param valSeats The number of seats the user wants to reserve.
+     * (Precondition: A positive valSeats)
+     */
+    public ArrayList<int[]> groupFinder(int valSeats)   {
+        boolean[][] vacancy = new boolean[10][14];
+        ArrayList<int[]> position = new ArrayList<int[]>();
+        
+        for(int i = 0; i < 10; i ++)
+        {
+            for(int j = 0; j < 14; j ++)
+            {
+                vacancy[i][j] = true;
+                if (seats[i][j].getVacancy()==false)
+                {
+                    vacancy[i][j] = false;
+                }
+            }
+        }
+        
+        for(int i = 0; i < 14; i ++)
+        {
+            vacancy[0][i] = false;
+            vacancy[13][i] = false;
+        }
+        
+        for(int i = 0; i < 10; i ++)
+        {
+            vacancy[i][0] = false;
+            vacancy[i][9] = false;
+        }
+        
+
+        int[] checkV = {-1,1,0,0};
+        int[] checkH = {0,0,-1,1};
+        finish: for (int i = 1; i <= 8; i ++)
+        {
+            for (int j = 1; j <= 12; j ++)
+            {
+                if (vacancy[i][j] == true)
+                {
+                    int counter = 0;
+                    position.add(new int[] {i,j});
+                    vacancy[i][j] = false;
+                    while (position.size() > counter)
+                    {
+                        if (valSeats <= position.size())
+                        {
+                            for (int k = 0; k < position.size() - valSeats; k++)
+                            position.remove(valSeats);
+                            return position;
+                        }
+                        int[] current = position.get(counter);
+                        for (int k = 0; k < 4; k ++)
+                        {
+                            if (vacancy[current[0] + checkV[k]][current[1] + checkH[k]] == true)
+                            {
+                                position.add(new int[]{current[0] + checkV[k], current[1] + checkH[k]});
+                                vacancy[current[0] + checkV[k]][current[1] + checkH[k]] = false;
+                            }
+                        }
+                        counter += 1;
+                    }
+                    position.clear();
+                }
+            }
+        }
+        return null;
+        
     }
     
     public static void main(String[] args) {
@@ -237,6 +313,8 @@ public class Airplane
            }
            
            if (option==4) {
+               
+               
            }
             
            if (option==5) {
@@ -267,9 +345,13 @@ public class Airplane
            }
            
            if (option==7) {
+               
+               
            }
            
            if (option==8) {
+               
+               
            }
            
            System.out.println("");
