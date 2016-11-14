@@ -1,25 +1,11 @@
 /**
- * Airplane containing seats.
+ * Constructs airplane containing seats.
  *
- * int ROW, SECTION
- * Seat[][]seats
- * Airplane()
- * initializeSeats()
- * printSeats()
- * displayMenu()
- * reserveSeat(String section, int row)
- * randomFill(int numberOfSeats) //Name as John Doe1, John Doe2, John Doe3...
  *
- * @author (your name) 
- * @version (a version number or a date)
+ * @author (Jennifer & Jason) 
+ * @version (11/13/16)
  */
 
-/**
- * Write a description of class Airplane here.
- * 
- * @author (Jennifer Lai & Jason Liang) 
- * @version (-- Nov 2016)
- */
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
@@ -27,11 +13,15 @@ public class Airplane
 {
     private final int ROW = 13; //Rows 1-12, exclude 0
     private final int SECTION = 9; //Sections A-H, exclude Z
-    private static String[] seatLetter = {"Z", "A", "B", "C", "D", "E", "F", "G", "H"};
-    private Seat[][] seats;
-    private Random rand;
+    private static String[] seatLetter = {"Z", "A", "B", "C", "D", "E", "F", "G", "H"}; //seat letters from A-H
+    private Seat[][] seats; //array of seats
+    private Random rand; //random generator
     private int type; //Number of times John Doe's have been made
     
+    /**
+     * Constructs airplane and intializes seats & random generator.
+     * (Postcondition: airplane is created)
+     */
     public Airplane() {
         seats = new Seat[SECTION][ROW];
         rand = new Random();
@@ -39,6 +29,10 @@ public class Airplane
         initializeSeats();
     }
     
+    /**
+     * Initializes seats array.
+     * (Postcondition: seats have vacancy,window view, and first class booleans & section & row)
+     */
     public void initializeSeats() {
         for (int i=1; i<ROW; i++) {
             boolean firstClass = true;
@@ -62,6 +56,10 @@ public class Airplane
         }
     }
     
+    /**
+     * Prints visual of seat layout. '[X]' represents occupied seats and '[ ]' represents available seats.
+     * (Postcondition: prints seat layout)
+     */
     public void printSeats() {
         for (int i=1; i<SECTION; i++) {
             System.out.print(seatLetter[i] + " "); 
@@ -81,6 +79,10 @@ public class Airplane
         System.out.println("   1  2  3  4     5  6  7  8  9  10 11 12");
     }
     
+    /**
+     * Displays all reserved information about passengers, including full name, seat section, and seat row.
+     * (Postcondiition: prints passengers in airplane)
+     */
     public void displayPassengers() {
         for (int i=1;i<SECTION; i++) {
             for (int j=1;j<ROW; j++) {
@@ -93,6 +95,7 @@ public class Airplane
         }
     }
     
+    /*
     public void displaySeats() {
         int length = 0;
         for (int i = 1; i <=8; i ++)
@@ -123,9 +126,15 @@ public class Airplane
         for (int i = 0; i < 4; i ++)
         {}
     }
+    */
     
-    
-    
+    /**
+     * Converts seat to integer to search within seats array.
+     * (Postcondition: index of section within array, -1 if not found)
+     * @param str section of seat.
+     * @return index of section within array, -1 if not found
+     * (Precondition: section exists in array)
+     */
     public int seatToInt(String str)
     {
        for (int i = 1; i < seatLetter.length; i ++)
@@ -138,6 +147,14 @@ public class Airplane
        return -1;
     }
     
+    /**
+     * Reserves seat for individual passenger.
+     * (Postcondition: sets certain seat to occupied and assigns passenger to that seat)
+     * @param section section of seat
+     * @param row row of seat
+     * @param p passenger reserving that seat
+     * (Precondition: section, row, and passenger p all exist)
+     */
     public void reserveSeat(String section, int row, Passenger p) {
         int sectionNew = seatToInt(section);
         if (seats[sectionNew][row].getVacancy()==true) {
@@ -147,7 +164,13 @@ public class Airplane
         else
             System.out.println("Occupied. Please choose another seat.");
     }
-    
+
+    /**
+     * Cancels seat for individual passenger by passenger name.
+     * (Postcondition: sets certain seat to unoccupied and removes passenger from that seat)
+     * @param fullName full name of passenger
+     * (Precondition: section, row, and passenger p all exist)
+     */    
     public void cancelByName(String fullName) {
         int foundSection = -1;
         int foundRow = -1;
@@ -174,7 +197,13 @@ public class Airplane
         }
     }
     
-    
+    /**
+     * Cancels seat for individual passenger by seat section and row.
+     * (Postcondition: sets certain seat to unoccupied and removes passenger from that seat)
+     * @param section section of seat
+     * @param row row of seat
+     * (Precondition: section, row, and passenger p all exist)
+     */    
     public void cancelBySeat(String section, int row) {
         int foundSection = seatToInt(section);
         if (seats[foundSection][row].getVacancy()==false) {
@@ -186,23 +215,11 @@ public class Airplane
             System.out.println("No such passenger found.");
     }
     
-    /*public void randomFill1(int n) {
-        int count=0;
-        while (count<n) {
-           int randSection = rand.nextInt(SECTION);
-           int randRow = rand.nextInt(ROW);
-           if (randSection !=0 && randRow !=0 && seats[randSection][randRow].getVacancy()==true) {
-               count += 1;
-               type += 1;
-               seats[randSection][randRow].setVacancy(false);
-               Passenger temp = new Passenger("John", "Doe" + type + "");
-               seats[randSection][randRow].assignPassenger(temp);
-            }
-        }
-    }*/
-    
     /**
      * Randomly selects availible spots
+     * (Postcondition: sets certain amount of seats to occupied and assigns passengers to those seats)
+     * @param n number of seats to be randomly filled by passengers
+     * (Precondition: amount of available seats>n)
      */
     public void randomFill(int n) {
         int count = 0;
@@ -333,6 +350,11 @@ public class Airplane
         
     }
     
+    /**
+     * Creates passenger with first name and last name.
+     * @return passenger with first and last name.
+     * (Precondition: passenger must have first and last name)
+     */
     public Passenger createPassenger() {
         Scanner st = new Scanner(System.in);
         String partName;
@@ -353,7 +375,8 @@ public class Airplane
     }
     
     /**
-     * 
+     * Counts number of passengers inside airplane.
+     * @return number of passengers inside airplane.
      */
     public int countPassengers() {
         int count = 0;
@@ -366,6 +389,12 @@ public class Airplane
         return count;
     }
     
+    /**
+     * Assigns group of passengers to certain adjacent seats in the airplane.
+     * (Postcondition: numberPassengers amount of passengers are assigned to adjacent groups)
+     * @param numberPassengers number of passengers that must be in a group
+     * (Precondition: numberPassengers>0)
+     */
     public void groupMaker(int numberPassengers) {
         ArrayList<int[]> position = groupFinder(numberPassengers);
         if (position != null)
@@ -528,101 +557,5 @@ public class Airplane
         
     }
     
-    public static void main(String[] args) {
-       
-       Scanner in = new Scanner(System.in);
-       Scanner st = new Scanner(System.in);
-       //Scanner val = new Scanner(System.in);
-       boolean opCont = true;
-       Airplane airborne = new Airplane();
-       //airborne.randomFill(20);
-       airborne.printSeats();
-       int option;
-       
-       while (opCont)
-       {
-           System.out.println("Number of passengers are: " + airborne.countPassengers());
-           System.out.println("1. Print occupancy.");
-           System.out.println("2. Reserve seat(s) manually.");
-           System.out.println("3. Reserve seat(s) automatically.");
-           System.out.println("4. Preferential seating reservation for one or more seats (WINDOW/AISLE/FIRST CLASS).");
-           System.out.println("5. Cancel reservation.");
-           System.out.println("6. Print passenger information.");
-           //System.out.println("7. Print all reserved seats information.");
-           //System.out.println("8. Seat class and preferential seating reservation for one or more seats.");
-           System.out.println("0. Quit");
-           System.out.print("Input option: ");
-           option = in.nextInt();
-           
-           
-           if (option == 0)
-           {
-               System.out.println("Plane == crashed");
-               break;
-            }
-           
-           if (option == 1)
-           airborne.printSeats();
-           
-           if (option == 2) {
-               System.out.print("How many passengers will be flying: ");
-               int numberPassengers = in.nextInt();
-               for (int i=0; i < numberPassengers; i++) {
-                   System.out.print("Input seat(Letter A - H) and row (No. 1 - 12): ");
-                   String partSeat = st.nextLine();
-                   String seatLetter = partSeat.substring(0,1);
-                   int seatRow = Integer.valueOf(partSeat.substring(1));
-                   airborne.reserveSeat(seatLetter, seatRow, airborne.createPassenger());
-
-                }              
-            }
-           
-           if (option == 3) {
-               System.out.print("How many random passengers will be flying? ");
-               int numberPassengers = in.nextInt();
-               airborne.randomFill(numberPassengers);
-           }
-           
-           if (option==4) {
-               System.out.print("How many grouped passengers will be flying? ");
-               int numberPassengers = in.nextInt();
-               airborne.groupMaker(numberPassengers);
-               option = -1;
-           }
-            
-           if (option==5) {
-               System.out.println("(1) Cancel by name.");
-               System.out.println("(2) Cancel by section and row.");
-               System.out.print("Input one of the options above: ");
-               int choice = in.nextInt();
-               if (choice==1) {
-                   String fullName;
-                   while (true)
-                   {
-                       System.out.print("Input passenger's first and last name (add the last space in between first and last name): ");
-                       fullName = st.nextLine();
-                       if (!(fullName.length() - fullName.replace(" ","").length() > 0))
-                            System.out.println("Enter a last name, or add a space between first name and last name."); 
-                       else 
-                            break;
-                   }
-                   airborne.cancelByName(fullName);
-                }
-                
-               if (choice==2) {
-                   System.out.print("Input seat(Letter A - H) and row (No. 1 - 12): ");
-                   String partSeat = st.nextLine();
-                   String seatLetter = partSeat.substring(0,1);
-                   int seatRow = Integer.valueOf(partSeat.substring(1));
-                   airborne.cancelBySeat(seatLetter, seatRow);
-                }
-           }
-           
-           if (option == 6) {
-               airborne.displayPassengers();
-           }
-           
-           System.out.println("");
-       }
-    }    
+    
 }
