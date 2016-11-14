@@ -366,6 +366,22 @@ public class Airplane
         return count;
     }
     
+    public void groupMaker(int numberPassengers) {
+        ArrayList<int[]> position = groupFinder(numberPassengers);
+        if (position != null)
+        {
+            for (int i = 0; i < numberPassengers; i++)
+            {
+                int[] spot = position.get(i);
+                reserveSeat(seatLetter[spot[0]], spot[1], createPassenger());
+            }
+        }
+        else
+        {
+            System.out.println("Could not find appropriate number of seats.");
+        }
+    }
+    
     /**
      * Returns an arraylist of arrays containing the sections and rows that may be used to group passengers. If no spots found, returns null.
      * (Postcondition: An arraylist within boundaries)
@@ -540,7 +556,10 @@ public class Airplane
            
            
            if (option == 0)
-           break;
+           {
+               System.out.println("Plane == crashed");
+               break;
+            }
            
            if (option == 1)
            airborne.printSeats();
@@ -548,18 +567,14 @@ public class Airplane
            if (option == 2) {
                System.out.print("How many passengers will be flying: ");
                int numberPassengers = in.nextInt();
-               for (int i=0; i<numberPassengers; i++) {
-                   System.out.print("Input seat(Letter A - H):  ");
-                   String seatLetter = st.nextLine();
-                   System.out.print("Input row (No. 1 - 12): ");
-                   int seatRow = in.nextInt();
-                   System.out.print("What is the passenger's first name: ");
-                   String pFirst = st.nextLine();
-                   System.out.print("What is the passenger's last name: ");
-                   String pLast = st.nextLine();
-                   Passenger temp = new Passenger(pFirst, pLast);
-                   airborne.reserveSeat(seatLetter, seatRow, temp);
-                }               
+               for (int i=0; i < numberPassengers; i++) {
+                   System.out.print("Input seat(Letter A - H) and row (No. 1 - 12): ");
+                   String partSeat = st.nextLine();
+                   String seatLetter = partSeat.substring(0,1);
+                   int seatRow = Integer.valueOf(partSeat.substring(1));
+                   airborne.reserveSeat(seatLetter, seatRow, airborne.createPassenger());
+
+                }              
             }
            
            if (option == 3) {
@@ -569,40 +584,9 @@ public class Airplane
            }
            
            if (option==4) {
-               System.out.println("1. Reserve individually");
-               System.out.println("2. Reserve in group");
-               System.out.print("Input one of the options above: ");
-               option = in.nextInt();
-               
-               System.out.print("How many passengers will be flying? ");
+               System.out.print("How many grouped passengers will be flying? ");
                int numberPassengers = in.nextInt();
-               
-               if (option == 1){
-                    for (int i=0; i < numberPassengers; i++) {
-                           System.out.print("Input seat(Letter A - H) and row (No. 1 - 12): ");
-                           String partSeat = st.nextLine();
-                           String seatLetter = partSeat.substring(0,1);
-                           int seatRow = Integer.valueOf(partSeat.substring(1));
-                           airborne.reserveSeat(seatLetter, seatRow, airborne.createPassenger());
-        
-                    }
-                }
-                
-               if (option == 2){
-                       ArrayList<int[]> position = airborne.groupFinder(numberPassengers);
-                       if (position != null)
-                       {
-                            for (int i = 0; i < numberPassengers; i++)
-                            {
-                                int[] spot = position.get(i);
-                                airborne.reserveSeat(seatLetter[spot[0]], spot[1], airborne.createPassenger());
-                            }
-                       }
-                       else
-                       {
-                            System.out.println("Could not find appropriate number of seats.");
-                       }
-               }
+               airborne.groupMaker(numberPassengers);
                option = -1;
            }
             
