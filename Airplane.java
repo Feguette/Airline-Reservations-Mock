@@ -529,7 +529,7 @@ public class Airplane
            System.out.println("1. Print occupancy.");
            System.out.println("2. Reserve seat(s) manually.");
            System.out.println("3. Reserve seat(s) automatically.");
-           System.out.println("4. Preferential seating reservation for one or more seats (WINDOW/AISLE).");
+           System.out.println("4. Preferential seating reservation for one or more seats (WINDOW/AISLE/FIRST CLASS).");
            System.out.println("5. Cancel reservation.");
            System.out.println("6. Print passenger information.");
            //System.out.println("7. Print all reserved seats information.");
