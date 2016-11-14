@@ -533,7 +533,7 @@ public class Airplane
            System.out.println("5. Cancel reservation.");
            System.out.println("6. Print passenger information.");
            System.out.println("7. Print all reserved seats information.");
-           System.out.println("8. Seat class and preferential seating reservation for one or more seats.");
+           //System.out.println("8. Seat class and preferential seating reservation for one or more seats.");
            System.out.println("0. Quit");
            System.out.print("Input option: ");
            option = in.nextInt();
@@ -546,6 +546,33 @@ public class Airplane
            airborne.printSeats();
            
            if (option == 2) {
+               System.out.print("How many passengers will be flying: ");
+               int numberPassengers = in.nextInt();
+               for (int i=0; i<numberPassengers; i++) {
+                   System.out.print("Input seat(Letter A - H):  ");
+                   String seatLetter = st.nextLine();
+                   System.out.print("Input row (No. 1 - 12): ");
+                   int seatRow = in.nextInt();
+                   System.out.print("What is the passenger's first name: ");
+                   String pFirst = st.nextLine();
+                   System.out.print("What is the passenger's last name: ");
+                   String pLast = st.nextLine();
+                   Passenger temp = new Passenger(pFirst, pLast);
+                   airborne.reserveSeat(seatLetter, seatRow, temp);
+                }               
+            }
+           
+           if (option == 3) {
+               System.out.println("1. Reserve randomly with filler");
+               System.out.println("2. Reserve in group");
+               System.out.print("Input one of the options above: ");
+               option = in.nextInt();
+               System.out.print("How many passengers will be flying? ");
+               int numberPassengers = in.nextInt();
+               airborne.randomFill(numberPassengers);
+           }
+           
+           if (option==4) {
                System.out.println("1. Reserve individually");
                System.out.println("2. Reserve in group");
                System.out.print("Input one of the options above: ");
@@ -581,21 +608,6 @@ public class Airplane
                        }
                }
                option = -1;
-            }
-           
-           if (option == 3) {
-               System.out.println("1. Reserve randomly with filler");
-               System.out.println("2. Reserve in group");
-               System.out.print("Input one of the options above: ");
-               option = in.nextInt();
-               System.out.print("How many passengers will be flying? ");
-               int numberPassengers = in.nextInt();
-               airborne.randomFill(numberPassengers);
-           }
-           
-           if (option==4) {
-               
-               
            }
             
            if (option==5) {
