@@ -93,6 +93,39 @@ public class Airplane
         }
     }
     
+    public void displaySeats() {
+        int length = 0;
+        for (int i = 1; i <=8; i ++)
+        {
+            for (int j = 1; j < 12; j ++)
+            {
+                int current = seats[i][j].getPassenger().getFullName().length();
+                length = Math.max(current, length);
+            }
+        }
+        
+        for (int i = 1; i <= 4; i ++)
+        {
+            System.out.print("Seat|");
+            System.out.print("Name");
+            for (int j = 4; j < length; j ++)
+             System.out.print(" ");
+             System.out.print("|");
+             System.out.print("First Class|Window Seat");
+            for (int j = 0; j < 4; i ++)
+            {
+                
+            }
+        }
+            
+        
+        
+        for (int i = 0; i < 4; i ++)
+        {}
+    }
+    
+    
+    
     public int seatToInt(String str)
     {
        for (int i = 1; i < seatLetter.length; i ++)
@@ -295,7 +328,7 @@ public class Airplane
         }
         else
         {
-            
+            System.out.println("No possible seats for those preferences.");
         }
         
     }
@@ -513,24 +546,48 @@ public class Airplane
            airborne.printSeats();
            
            if (option == 2) {
-               System.out.print("How many passengers will be flying: ");
+               System.out.println("1. Reserve individually");
+               System.out.println("2. Reserve in group");
+               System.out.print("Input one of the options above: ");
+               option = in.nextInt();
+               
+               System.out.print("How many passengers will be flying? ");
                int numberPassengers = in.nextInt();
-               for (int i=0; i<numberPassengers; i++) {
-                  System.out.print("Input seat(Letter A - H):  ");
-                  String seatLetter = st.nextLine();
-                  System.out.print("Input row (No. 1 - 12): ");
-                  int seatRow = in.nextInt();
-                  System.out.print("What is the passenger's first name: ");
-                  String pFirst = st.nextLine();
-                  System.out.print("What is the passenger's last name: ");
-                  String pLast = st.nextLine();
-                  Passenger temp = new Passenger(pFirst, pLast);
-                  airborne.reserveSeat(seatLetter, seatRow, temp);
+               
+               if (option == 1){
+                    for (int i=0; i < numberPassengers; i++) {
+                           System.out.print("Input seat(Letter A - H) and row (No. 1 - 12): ");
+                           String partSeat = st.nextLine();
+                           String seatLetter = partSeat.substring(0,1);
+                           int seatRow = Integer.valueOf(partSeat.substring(1));
+                           airborne.reserveSeat(seatLetter, seatRow, airborne.createPassenger());
+        
+                    }
+                }
+                
+               if (option == 2){
+                       ArrayList<int[]> position = airborne.groupFinder(numberPassengers);
+                       if (position != null)
+                       {
+                            for (int i = 0; i < numberPassengers; i++)
+                            {
+                                int[] spot = position.get(i);
+                                airborne.reserveSeat(seatLetter[spot[0]], spot[1], airborne.createPassenger());
+                            }
+                       }
+                       else
+                       {
+                            System.out.println("Could not find appropriate number of seats.");
+                       }
                }
+               option = -1;
             }
            
            if (option == 3) {
-               
+               System.out.println("1. Reserve randomly with filler");
+               System.out.println("2. Reserve in group");
+               System.out.print("Input one of the options above: ");
+               option = in.nextInt();
                System.out.print("How many passengers will be flying? ");
                int numberPassengers = in.nextInt();
                airborne.randomFill(numberPassengers);
