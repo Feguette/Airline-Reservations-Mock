@@ -563,11 +563,7 @@ public class Airplane
             }
            
            if (option == 3) {
-               System.out.println("1. Reserve randomly with filler");
-               System.out.println("2. Reserve in group");
-               System.out.print("Input one of the options above: ");
-               option = in.nextInt();
-               System.out.print("How many passengers will be flying? ");
+               System.out.print("How many random passengers will be flying? ");
                int numberPassengers = in.nextInt();
                airborne.randomFill(numberPassengers);
            }
@@ -640,16 +636,6 @@ public class Airplane
            
            if (option == 6) {
                airborne.displayPassengers();
-           }
-           
-           if (option==7) {
-               
-               
-           }
-            
-           if (option==8) {
-               
-               
            }
            
            System.out.println("");
