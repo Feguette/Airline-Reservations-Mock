@@ -1,0 +1,111 @@
+
+/**
+ * Reserving seats system for airplane.
+ * 
+ * @author (Jennifer & Jason) 
+ * @version (11/13/16)
+ */
+
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Random;
+public class AirplaneTester
+{
+    public static void main(String[] args) {
+       
+       Scanner in = new Scanner(System.in);
+       Scanner st = new Scanner(System.in);
+       //Scanner val = new Scanner(System.in);
+       boolean opCont = true;
+       Airplane airborne = new Airplane();
+       //airborne.randomFill(20);
+       airborne.printSeats();
+       int option;
+       
+       while (opCont)
+       {
+           System.out.println("Number of passengers are: " + airborne.countPassengers());
+           System.out.println("1. Print occupancy.");
+           System.out.println("2. Reserve seat(s) manually.");
+           System.out.println("3. Reserve seat(s) automatically.");
+           System.out.println("4. Preferential seating reservation for one or more seats (WINDOW/AISLE/FIRST CLASS).");
+           System.out.println("5. Cancel reservation.");
+           System.out.println("6. Print passenger information.");
+           //System.out.println("7. Print all reserved seats information.");
+           //System.out.println("8. Seat class and preferential seating reservation for one or more seats.");
+           System.out.println("0. Quit");
+           System.out.print("Input option: ");
+           option = in.nextInt();
+           
+           
+           if (option == 0)
+           {
+               System.out.println("Plane == crashed");
+               break;
+            }
+           
+           if (option == 1)
+           airborne.printSeats();
+           
+           if (option == 2) {
+               System.out.print("How many passengers will be flying: ");
+               int numberPassengers = in.nextInt();
+               for (int i=0; i < numberPassengers; i++) {
+                   System.out.print("Input seat(Letter A - H) and row (No. 1 - 12): ");
+                   String partSeat = st.nextLine();
+                   String seatLetter = partSeat.substring(0,1);
+                   int seatRow = Integer.valueOf(partSeat.substring(1));
+                   airborne.reserveSeat(seatLetter, seatRow, airborne.createPassenger());
+
+                }              
+            }
+           
+           if (option == 3) {
+               System.out.print("How many random passengers will be flying? ");
+               int numberPassengers = in.nextInt();
+               airborne.randomFill(numberPassengers);
+           }
+           
+           if (option==4) {
+               System.out.print("How many grouped passengers will be flying? ");
+               int numberPassengers = in.nextInt();
+               airborne.groupMaker(numberPassengers);
+               option = -1;
+           }
+            
+           if (option==5) {
+               System.out.println("(1) Cancel by name.");
+               System.out.println("(2) Cancel by section and row.");
+               System.out.print("Input one of the options above: ");
+               int choice = in.nextInt();
+               if (choice==1) {
+                   String fullName;
+                   while (true)
+                   {
+                       System.out.print("Input passenger's first and last name (add the last space in between first and last name): ");
+                       fullName = st.nextLine();
+                       if (!(fullName.length() - fullName.replace(" ","").length() > 0))
+                            System.out.println("Enter a last name, or add a space between first name and last name."); 
+                       else 
+                            break;
+                   }
+                   airborne.cancelByName(fullName);
+                }
+                
+               if (choice==2) {
+                   System.out.print("Input seat(Letter A - H) and row (No. 1 - 12): ");
+                   String partSeat = st.nextLine();
+                   String seatLetter = partSeat.substring(0,1);
+                   int seatRow = Integer.valueOf(partSeat.substring(1));
+                   airborne.cancelBySeat(seatLetter, seatRow);
+                }
+           }
+           
+           if (option == 6) {
+               airborne.displayPassengers();
+           }
+           
+           System.out.println("");
+       }
+    }    
+}
